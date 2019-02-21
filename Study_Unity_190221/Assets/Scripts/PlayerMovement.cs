@@ -5,66 +5,94 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
-	GameObject heart_1;
-	GameObject heart_2;
-	GameObject heart_3;
-
-
-	float speed;
-	public float range;
-	int maxHP;
-	int curHP;
-	public bool isHeat;
+	int _maxHP; // 최대체력
+	int _curHP; // 현재체력
+	float _speed; // 이동속도
+	float _radious; // 충돌반경
+	bool _isHeat; // 충돌체크
 
 
 
 	void Start ()
 	{
-		speed = 0.3f;
-		range = 0.2f;
-
-		curHP = maxHP = 3;
-		heart_1 = GameObject.Find("HP_1");
-		heart_2 = GameObject.Find("HP_2");
-		heart_3 = GameObject.Find("HP_3");
-		isHeat = false;
+		_speed = 0.3f;
+        _radious = 0.2f;
+		_curHP = _maxHP = 3;
+		_isHeat = false;
 	}
 	
 	void Update ()
 	{
-		if (Input.GetKey(KeyCode.UpArrow))
-		{
-			transform.Translate(0, speed, 0);
-		}
+        // 캐릭터 조작
+        HandleCharacter();
 
-		if (Input.GetKey(KeyCode.DownArrow))
-		{
-			transform.Translate(0, -speed, 0);
-		}
+        // 만약 맞으면
+        CheckDamage();
+    }
 
-		if (Input.GetKey(KeyCode.RightArrow))
-		{
-			transform.Translate(speed, 0, 0);
-		}
+    void HandleCharacter()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Translate(0, _speed, 0);
+        }
 
-		if (Input.GetKey(KeyCode.LeftArrow))
-		{
-			transform.Translate(-speed, 0, 0);
-		}
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.Translate(0, -_speed, 0);
+        }
 
-		// 만약 맞으면
-		if (isHeat)
-		{
-			Debug.Log("맞음");
-			curHP--;
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(_speed, 0, 0);
+        }
 
-			// 게임 오버시 소멸
-			if (curHP == 0)
-			{
-				Destroy(gameObject);
-			}
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(-_speed, 0, 0);
+        }
+    }
 
-			isHeat = false;
-		}
-	}
+    void CheckDamage()
+    {
+        if (_isHeat)
+        {
+            Debug.Log("맞음");
+            _curHP--;
+
+            // 게임 오버시 소멸
+            if (_curHP == 0)
+            {
+                Debug.Log("죽음");
+            }
+
+            _isHeat = false;
+        }
+    }
+
+    #region property
+    public bool IsHeat
+    {
+        //get { return _isHeat; }
+        set { this._isHeat = value; }
+    }
+
+    public int CurHP
+    {
+        get { return this._curHP; }
+        set { this._curHP = value; }
+    }
+
+    public Vector3 CurPos
+    {
+        get { return transform.position; }
+        set { transform.SetPositionAndRotation(value, Quaternion.identity); }
+    }
+
+    public float Radious
+    {
+        get { return _radious; }
+        //set { this._radious = value; }
+    }
+    #endregion property
 }

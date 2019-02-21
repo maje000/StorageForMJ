@@ -4,55 +4,51 @@ using UnityEngine;
 
 public class KnifeMovement : MonoBehaviour {
 
-	GameObject player;
-	public float duration;
-	float range;
-	Vector3 distance;
+	float _duration; // 지속시간
+    float _speed;
+	float _radious; // 충돌반경
+    bool _isHeat; // 충돌체크
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find("Player");
-		duration = 1.5f;
-		transform.Translate(-10f, 0, 0);
+        _duration = 1.5f;
+        _speed = 0.2f;
+        _radious = 0.2f;
+        _isHeat = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        // 지속시간 감소
+		_duration -= Time.deltaTime;
 
 		// 이동
-		transform.Translate(0.2f, 0, 0);
-		duration -= Time.deltaTime;
-		// 소멸 조건 // 시간초 체크
-		if (duration < 0.0f)
+		transform.Translate(_speed, 0, 0);
+
+		// 소멸 조건 // 지속시간 체크 or 충돌
+		if (_duration < 0.0f || _isHeat)
 		{
 			Destroy(gameObject);
 		}
-
-		//distance = gameObject.transform.position - player.transform.position;
-		//float dir = distance.magnitude;
-		//range = player.GetComponent<PlayerMovement>().range + 0.2f;
-
-		
-		//if (dir < range)
-		//{
-
-		//	Destroy(gameObject);
-		//}
-		//else if (gameObject.transform.position())
-		//{
-		//}
 	}
 
-	public bool HeatPlayer()
-	{
-		distance = gameObject.transform.position - player.transform.position;
-		float dir = distance.magnitude;
-		range = player.GetComponent<PlayerMovement>().range + 0.2f;
+    #region property
+    public bool IsHeat
+    {
+        //get { return this._isHeat; }
+        set { this._isHeat = value; }
+    }
 
-		if (dir < range)
-		{
-			return true;
-		}
-		return false;
-	}
+    public Vector3 CurPos
+    {
+        get { return gameObject.transform.position; }
+        //set { gameObject.transform.SetPositionAndRotation(value, Quaternion.identity); }
+    }
+
+    public float Radious
+    {
+        get { return _radious; }
+        //set { this._radious = value; }
+    }
+    #endregion property
 }
