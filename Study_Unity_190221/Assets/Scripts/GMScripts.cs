@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 enum GameState
 {
     GS_WAIT = 0,
@@ -30,7 +31,11 @@ public class GMScripts : MonoBehaviour
     public GameObject obj; // Prefab을 받기 위한 임시저장 변수
 
     GameState _gameState;
-    GameObject _player;
+    public GameObject _objResultShow;
+
+    GameObject _objCountTime;
+    GameObject _objPlayer;
+    GameObject[] _HP;
     List<GameObject> _Knifes; // 투사체들의 집합
     float _countTime;
     float _spawnTime;
@@ -39,12 +44,17 @@ public class GMScripts : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _objCountTime = GameObject.Find("countTime");
+        _objPlayer = GameObject.Find("Player");
         _Knifes = new List<GameObject>();
+        for (int i = 0; i < 3; i++)
+        {
+            _HP[i] = Instantiate("img_HP", new Vector3(),Quaternion.identity);
+            instan
+        }
         _gameState = GameState.GS_WAIT;
         _spawnTime = 0.0f;
         _countTime = 30.0f; // 남은 시간
-        
     }
 
     // Update is called once per frame
@@ -86,12 +96,15 @@ public class GMScripts : MonoBehaviour
         // Play
         // _gameState = GameState.GS_PLAY;
 
+
+        // 대기화면 출력
+
         #region GameState
         // 일단은 Space 입력시 시작
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _player.GetComponent<PlayerMovement>().enabled = true;
-            _player.GetComponent<PlayerMovement>().CurHP = 3;
+            _objPlayer.GetComponent<PlayerMovement>().enabled = true;
+            _objPlayer.GetComponent<PlayerMovement>().CurHP = 3;
             _gameState = GameState.GS_PLAY;
         }
         #endregion GameState
@@ -108,7 +121,9 @@ public class GMScripts : MonoBehaviour
         // 일단 진행
         _spawnTime -= Time.deltaTime;
         _countTime -= Time.deltaTime;
-
+        //string str = string.Format("남은 시간 : {0}", _countTime);
+        string str;
+        _objCountTime.GetComponent<Text>().text = str = string.Format("남은 시간 : {0}", (int)_countTime);
         if (_spawnTime < 0.0f)
         {
 
@@ -116,6 +131,7 @@ public class GMScripts : MonoBehaviour
 
             temp_Knife.transform.Rotate(0, 0, Random.Range(0, 360));
             temp_Knife.transform.Translate(-10, 0, 0);
+            Debug.Log(str);
 
             _Knifes.Add(temp_Knife);
 
@@ -132,7 +148,7 @@ public class GMScripts : MonoBehaviour
             }
 
             // 그다음 체크
-            if (CheckHeat(_player, item))
+            if (CheckHeat(_objPlayer, item))
             {
                 // 해당 item 을 리스트에서 빼주고.
                 Debug.Log(_Knifes.LastIndexOf(item));
@@ -143,9 +159,11 @@ public class GMScripts : MonoBehaviour
 
 
         #region GameState
-        if (_player.GetComponent<PlayerMovement>().CurHP == 0) // 죽었을 경우
+        if (_objPlayer.GetComponent<PlayerMovement>().CurHP == 0) // 죽었을 경우
         {
-            _player.GetComponent<PlayerMovement>().enabled = false;
+            _objPlayer.GetComponent<PlayerMovement>().enabled = false;
+            
+            Instantiate(_objResultShow, new Vector3(0, 0, 0), Quaternion.identity);
             _gameState = GameState.GS_DEAD;
         }
         else if (_countTime < 0) // 살아남을 경우
@@ -167,7 +185,11 @@ public class GMScripts : MonoBehaviour
         // 맞는 조건에 해당하는 상태로 이동
         #region GameState
         // WAIT
-        _gameState = GameState.GS_WAIT;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Destroy(GameObject.Find("ResultShow"));
+            _gameState = GameState.GS_WAIT;
+        }
         // EXIT
         //_gameState = GameState.GS_EXIT;
         # endregion GameState
@@ -185,7 +207,7 @@ public class GMScripts : MonoBehaviour
         if (Distance < radious)
         {
             // 부딪힘
-            _player.GetComponent<PlayerMovement>().IsHeat = true;
+            _objPlayer.GetComponent<PlayerMovement>().IsHeat = true;
             Knife.GetComponent<KnifeMovement>().IsHeat = true;
             return true;
         }
