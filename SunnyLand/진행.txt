@@ -8,5 +8,37 @@
 	Z키 누르면 점프
 5. 애니메이션
 
+진행
+1. 다른 클래스 활용 상속 글로벌
+2. 코루틴
+3. Mathf
+4. 클론을 자식 오브젝트로 활용하는 방법
+5. 애니메이션이 끝나면 오브젝트 사라지게 하기 (이펙트)
+
 
 스크립트
+해당 역할에만 충실
+Main Scripts  : 모든 객체를 총 감독 ->감독
+SceneManager : 씬감독? // 일단 지금은 필요없고
+BackGround Object
+
+// 다음 객체들은 자신의 일만 수행
+Player Object
+Monster Object
+Item Object
+
+현재 진행도
+Monster, Item 애니메이션 끝
+Environment 더 찍어야 되고
+Script 더 짜야대고
+
+지금 할 일
+Monster와 Item Object Script 짜기
+Monster
+이미지 대로
+Eagle 위아래로 와리가리
+Frog 앞뒤로 폴작폴짝
+Opossum 앞뒤로 와리가리
+
+StartCoroutine(ienumulate); 코루틴 실행 그 머시기
+Mathf; 수학 연산시 필요한 모든것이 있츰
