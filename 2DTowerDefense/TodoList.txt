@@ -1,0 +1,33 @@
+TodoList <2D Tower Defense>
+Project:
+ - Map 꾸미기
+    - 배경
+        - Prefabs 만들기 <@Done>
+        - 맵을 꾸미고 <@Done>
+        - 땅 만들고 <@Done>
+        - 구름 움직이게 
+
+ - Player컨트롤 먹도록
+    - 따로  PlayerController 객체를 생성해서 전체적으로 관리해주고 Alies 따로따로 컨트롤
+    - Alies Prefabs 만들기 <@Done>
+    - 마우스 커서에 포커싱  <@Done>
+        - 객체에 대한 angle값 및 rotation값 수정 가능 <@Done>
+    - 마우스 버튼 클릭시 화살 발사
+    - 캐릭터 업그레이드 <추후
+    - 성 업그레이드 < 추후
+
+ - Moster가 미처날뛰게
+    - 몬스터 프리펩 생성
+    - 몬스터 스크립트 만들고
+        - Monster의 Base Script 만들고
+            - 체력, 스피드, isDead, Collision, 이동은 transform.Translate; 
+        - 각 몬스터의 Scripts 생성
+            - 각각의 행동 패턴 입력
+            - 충돌 체크, 죽음 체크
+    - 몬스터 재너레이터 생성
+        - 일정 주기마다 Monster 생성
+        - 조건에 맞는 주기를 만들어줌
+    - Monster 가 성에 부딪힐 경우 Castle의 체력이 깍이게
+        - 단순히 이동시켜서 Castle에서 Trigger가 드러오면 처리하게끔
+
+Achieve:
