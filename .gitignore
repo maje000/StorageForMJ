@@ -1,4 +1,4 @@
-//SunnyLand
+﻿//SunnyLand
 SunnyLand/Library/
 SunnyLand/obj/
 SunnyLand/Temp/
@@ -9,6 +9,8 @@ SunnyLand/.vs/
 2DTowerDefense/obj/
 2DTowerDefense/Temp/
 2DTowerDefense/.vs/
+2DTowerDefense/Assets/Sources/
+2DTowerDefense/ProjectSettings/
 
 // Study_Unity_190221 �̸� ���� ���
 Study_Unity_190221/Library/
@@ -21,9 +23,6 @@ Study_Unity_190221/.vs/
 2DRoguelike_Follow/obj/
 2DRoguelike_Follow/Temp/
 2DRoguelike_Follow/.vs/
-2DRoguelike_Follow/Assets/Resources/2DRogueLike.meta
 2DRoguelike_Follow/Assets/Resources/
 2DRoguelike_Follow/Logs/
-2DTowerDefense/Assets/Sources/
 2DRoguelike_Follow/ProjectSettings/
-2DTowerDefense/ProjectSettings/
