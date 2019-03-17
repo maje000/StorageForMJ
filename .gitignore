@@ -1,4 +1,23 @@
+//SunnyLand
 SunnyLand/Library/
 SunnyLand/obj/
 SunnyLand/Temp/
 SunnyLand/.vs/
+
+// 2DTowerDefense
+2DTowerDefense/Library/
+2DTowerDefense/obj/
+2DTowerDefense/Temp/
+2DTowerDefense/.vs/
+
+// Study_Unity_190221 이름 수정 요망
+Study_Unity_190221/Library/
+Study_Unity_190221/obj/
+Study_Unity_190221/Temp/
+Study_Unity_190221/.vs/
+
+// 2DRoguelike
+2DRoguelike_Follow/Library/
+2DRoguelike_Follow/obj/
+2DRoguelike_Follow/Temp/
+2DRoguelike_Follow/.vs/
