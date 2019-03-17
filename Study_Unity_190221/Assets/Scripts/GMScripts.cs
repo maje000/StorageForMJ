@@ -49,8 +49,8 @@ public class GMScripts : MonoBehaviour
         _Knifes = new List<GameObject>();
         for (int i = 0; i < 3; i++)
         {
-            _HP[i] = Instantiate("img_HP", new Vector3(),Quaternion.identity);
-            instan
+            //_HP[i] = Instantiate("img_HP", new Vector3(),Quaternion.identity);
+            //instan
         }
         _gameState = GameState.GS_WAIT;
         _spawnTime = 0.0f;
@@ -123,7 +123,9 @@ public class GMScripts : MonoBehaviour
         _countTime -= Time.deltaTime;
         //string str = string.Format("남은 시간 : {0}", _countTime);
         string str;
-        _objCountTime.GetComponent<Text>().text = str = string.Format("남은 시간 : {0}", (int)_countTime);
+        Text objCountTimeTxt = _objCountTime.GetComponent<Text>();
+
+        objCountTimeTxt.text = str = string.Format("남은 시간 : {0}", (int)_countTime);
         if (_spawnTime < 0.0f)
         {
 
@@ -163,7 +165,8 @@ public class GMScripts : MonoBehaviour
         {
             _objPlayer.GetComponent<PlayerMovement>().enabled = false;
             
-            Instantiate(_objResultShow, new Vector3(0, 0, 0), Quaternion.identity);
+           GameObject resultObj = Instantiate(_objResultShow, new Vector3(0, 0, 0), Quaternion.identity);
+            _objResultShow.SetActive(false);
             _gameState = GameState.GS_DEAD;
         }
         else if (_countTime < 0) // 살아남을 경우

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// fsm 삽입하기
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,43 +11,39 @@ enum MonsterState
     Frog,
     Opossum,
 }
-public class MonsterController : MonoBehaviour
+
+public class MonsterController : BaseActor
 {
     MonsterState _monsterState;
-    Animator _animator;
-    Rigidbody2D _rigid2D;
-    Vector3 _curScale;
+
     float _cycleTime;
-    float _speed;
+    Vector3 _curScale;
     float dir;
 
-    bool _isDead;
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
-        _speed = 0.0f;
+        MonsterInit(15.0f);
         _cycleTime = 2.0f;
         dir = 1;
-        _isDead = true;
 
         _curScale = transform.localScale;
 
-        if (gameObject.name == "Eagle")
+        if (gameObject.transform.tag == "Eagle")
         {
             _monsterState = MonsterState.Eagle;
-            _speed = 2.0f;
+            SetSpeed = 2.0f;
         }
-        else if (gameObject.name == "Frog")
+        else if (gameObject.transform.tag == "Frog")
         {
             _monsterState = MonsterState.Frog;
-            _speed = 1.0f;
+            SetSpeed = 1.0f;
         }
-        else if (gameObject.name == "Opossum")
+        else if (gameObject.transform.tag == "Opossum")
         {
             _monsterState = MonsterState.Opossum;
-            _speed = 1.0f;
+            SetSpeed = 1.0f;
         }
 
         Debug.Log(_monsterState + gameObject.name);
@@ -95,13 +93,23 @@ public class MonsterController : MonoBehaviour
 
         Vector3 tempScale = new Vector3(_curScale.x * dir, _curScale.y, _curScale.z);
         transform.localScale = tempScale;
-        transform.Translate(tempVec * _speed * Time.deltaTime);
+        transform.Translate(tempVec * SetSpeed * Time.deltaTime);
+    }
+
+    protected void MonsterInit(float speed)
+    {
+        SetAni = GetComponent<Animator>();
+        SetRigid2D = GetComponent<Rigidbody2D>();
+
+        SetDeath = false;
+        SetSpeed = speed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector3 vec = collision.transform.position - transform.position;
-        float degree = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
-        if (degree < 120 && 60 < degree) _animator.SetBool("isDead", true);
+        if (collision.transform.tag == "Player")
+        {
+            SetAni.SetBool("isDead", MetaFuntion.IsHit(this.transform, collision.transform));
+        }
     }
 }
